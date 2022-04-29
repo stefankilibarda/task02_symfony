@@ -2,11 +2,38 @@
 
 {% block body %}
 
-<h1> hello world, let's be a cliche </h1>
+<div class="container mt-5">
+    <button class="btn btn-primary"><a class="text-decoration-none text-white" href="/add-driver">Add new deliverer</a></button>
+    <button class="btn btn-primary"><a class="text-decoration-none text-white" href="/add-vehicle">Add new vehicle</a></button>
+</div>
 
-{% for rent in rents %}
-    {{ rent.getDeliverer().getName() }} je zaduzio vozilo {{ rent.getVehicle().getBrand() }}<br>
-{% endfor %}
 
+<div class="container mt-5">
+<table id="table_id" class="table table-striped table-hover text-center
+                 mt-5">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Vehicle</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rent in rents %}
+            <tr>
+                <td>{{ rent.getDeliverer().getName() }}</td>
+                <td>{{ rent.getVehicle().getBrand() }}</td>
+                <td><div class="row row-cols">
+                                        <div class="col">
+                                            <button class="btn btn-success"><a class="text-decoration-none text-white" href="#">Reserve Vehicle</a></button>
+                                            <button class="btn btn-warning"><a class="text-decoration-none text-white" href="#">Reservation History</a></button>
+                                        </div>
+                                    </div>
+                </td>
+            </tr>        
+        {% endfor %}
+    </tbody>
+</table>
+</div>
 
 {% endblock %}

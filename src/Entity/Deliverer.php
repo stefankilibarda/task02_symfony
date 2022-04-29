@@ -6,9 +6,11 @@ use App\Repository\DelivererRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DelivererRepository::class)]
 #[ORM\Table('deliverers')]
+
 class Deliverer
 {
     #[ORM\Id]
@@ -17,6 +19,7 @@ class Deliverer
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private $name;
 
     #[ORM\OneToMany(mappedBy: 'deliverer', targetEntity: Rent::class)]
