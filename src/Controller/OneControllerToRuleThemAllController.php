@@ -16,22 +16,43 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OneControllerToRuleThemAllController extends AbstractController
 {
-    #[Route('/all', name: 'all')]
-    public function all(RentRepository $rentRepository, DelivererRepository $delivererRepository, Request $request)
+
+    #[Route('/', name: 'index')]
+    public function home()
     {
-        $deliverer = new Deliverer();
         
-
-        
-        return $this->render('one_controller_to_rule_them_all/index.html.twig', [
-            'rents' => $rentRepository->findAll()
-        ]);
-
-        
+        return $this->render('one_controller_to_rule_them_all/index.html.twig');
     }
 
-    #[Route('/add-driver', name: 'add-driver')]
-    public function addNewDriver(DelivererRepository $delivererRepository, Request $request)
+    #[Route('/all-deliverers', name: 'all-deliverers')]
+    public function allDeliverers(DelivererRepository $delivererRepository)
+    {
+        
+        return $this->render('one_controller_to_rule_them_all/deliverers.html.twig', [
+            'deliverers' => $delivererRepository->findAll()
+        ]);
+    }
+
+    #[Route('/all-vehicles', name: 'all-vehicle')]
+    public function allVehicle(VehicleRepository $vehicleRepository)
+    {
+        
+        return $this->render('one_controller_to_rule_them_all/vehicles.html.twig', [
+            'vehicles' => $vehicleRepository->findAll()
+        ]);
+    }
+
+    #[Route('/all-reservations', name: 'all-reservations')]
+    public function allReservations(RentRepository $rentRepository)
+    {
+        
+        return $this->render('one_controller_to_rule_them_all/reservations.html.twig', [
+            'rents' => $rentRepository->findAll()
+        ]);
+    }
+
+    #[Route('/add-deliverer', name: 'add-deliverer')]
+    public function addNewDeliverer(DelivererRepository $delivererRepository, Request $request)
     {
         $deliverer = new Deliverer();
         $form = $this->createForm(DelivererType::class, $deliverer);
@@ -65,10 +86,26 @@ class OneControllerToRuleThemAllController extends AbstractController
         return $this->render('one_controller_to_rule_them_all/add-vehicle.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route('/reserve-vehicle', name: 'reserve-vehicle')]
-    public function reserveVehicle($id, DelivererRepository $delivererRepository)
+    #[Route('/reservation-history-deliverer/{id}', name: 'reservation-history-deliverer', methods: ['GET', 'PUT'])]
+    public function reservevationHistoryDeliverers($id, DelivererRepository $delivererRepository)
     {
-        // $deliverer = $delivererRepository-find($id);
+        $deliverer = $delivererRepository->find($id);
+
+        $rents = $deliverer->getRents();
+
+        return $this->render('one_controller_to_rule_them_all/reservations-history-deliverer.html.twig', ['rents' => $rents]);
+        
+    }
+
+    #[Route('/reservation-history-vehicle/{id}', name: 'reservation-history-vehicle', methods: ['GET', 'PUT'])]
+    public function reservevationHistoryVehicle($id, VehicleRepository $vehicleRepository)
+    {
+        $vehicle = $vehicleRepository->find($id);
+
+        $rents = $vehicle->getRents();
+
+        return $this->render('one_controller_to_rule_them_all/reservations-history-vehicle.html.twig', ['rents' => $rents]);
+        
     }
 
     
