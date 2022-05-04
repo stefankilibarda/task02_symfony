@@ -17,22 +17,24 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Current vehicle</th>
             <th>Options</th>
         </tr>
     </thead>
     <tbody>
-        {% for deliverer in deliverers %}
-            <tr>
-                <td>{{ deliverer.getName() }}</td>
-                <td><div class="row row-cols">
-                                        <div class="col">
-                                            <button class="btn btn-success"><a class="text-decoration-none text-white" href="#">Reserve Vehicle</a></button>
-                                            <button class="btn btn-warning"><a class="text-decoration-none text-white" href="{{ path('reservation-history-deliverer', {'id': deliverer.id}) }}">Reservation History</a></button>
+            {% for deliverer in deliverers %}
+                <tr>
+                    <td>{{ deliverer.getName() }}</td>
+                    <td>{{ deliverer.lastVehicle }}</td>
+                    <td><div class="row row-cols">
+                                            <div class="col">
+                                                <button class="btn btn-success"><a class="text-decoration-none text-white" href="#">Reserve Vehicle</a></button>
+                                                <button class="btn btn-warning"><a class="text-decoration-none text-white" href="{{ path('reservation-history-deliverer', {'id': deliverer.id}) }}">Reservation History</a></button>
+                                            </div>
                                         </div>
-                                    </div>
-                </td>
-            </tr>        
-        {% endfor %}
+                    </td>
+                </tr>        
+            {% endfor %}
     </tbody>
 </table>
 </div>

@@ -47,6 +47,19 @@ class DelivererRepository extends ServiceEntityRepository
         }
     }
 
+    public function lastReservedVehicle($id)
+  {
+    $query = $this->createQueryBuilder('d')
+      ->select('d, r')
+      ->where('d.id = :id')
+      ->leftJoin('d.rents', 'r')
+      ->setParameter('id', $id)
+      ->orderBy('r.id', 'DESC')
+      ->getQuery()
+      ->getResult();
+    return $query[0];
+
+  }
     // /**
     //  * @return Deliverer[] Returns an array of Deliverer objects
     //  */

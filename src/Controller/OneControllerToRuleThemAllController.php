@@ -25,12 +25,35 @@ class OneControllerToRuleThemAllController extends AbstractController
     }
 
     #[Route('/all-deliverers', name: 'all-deliverers')]
-    public function allDeliverers(DelivererRepository $delivererRepository)
+    public function allDeliverers(DelivererRepository $delivererRepository, RentRepository $rentRepository)
     {
+
+        $deliverers = $delivererRepository->findAll();
+
+        foreach($deliverers as $deliverer) {
+         $lastVehicle = $delivererRepository->lastReservedVehicle($deliverer->getId());
+        if($lastVehicle->getRents()[0] !== null)
+        {
+          $vehicle = $lastVehicle->getRents()[0]->getVehicle();
+          $vehicleBrand = $vehicle->getBrand();
+          $deliverer->lastVehicle = $vehicleBrand;
+
+        } else {
+          $deliverer->lastVehicle = "No reservation history";
+        }
         
+    }
+    
+    // dd($deliverers);
+
+
+
         return $this->render('one_controller_to_rule_them_all/deliverers.html.twig', [
-            'deliverers' => $delivererRepository->findAll()
+            'deliverers' => $deliverers,
+            'rents' => $rentRepository->findAll()
         ]);
+
+        
     }
 
     #[Route('/all-vehicles', name: 'all-vehicle')]

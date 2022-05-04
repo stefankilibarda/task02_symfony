@@ -46,6 +46,7 @@ class VehicleRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    
 
     // /**
     //  * @return Vehicle[] Returns an array of Vehicle objects
