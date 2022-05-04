@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<h1 class="container mt-5 mb-5 d-flex justify-content-center">Reserve vehicle</h1>
+
+<div class="container mt-5">
+<table id="table_id" class="table table-striped table-hover text-center
+                 mt-5">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Select vehicle</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+                <tr>
+                    <td>{{ rent.getDeliverer().getName }}</td>
+                    <td>{{ form(form) }}</td>
+                    <td><div class="row row-cols">
+                                            <div class="col">
+                                                <button class="btn btn-success"><a class="text-decoration-none text-white" href="#">Confirm</a></button>
+                                                <button class="btn btn-danger"><a class="text-decoration-none text-white" href="#">Cancel</a></button>
+                                            </div>
+                                        </div>
+                    </td>
+                </tr>
+    </tbody>
+</table>
+</div>
+    </div>
+</div>
+
+{% endblock %}

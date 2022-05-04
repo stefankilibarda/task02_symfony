@@ -28,7 +28,7 @@
                     <td>{{ deliverer.lastVehicle }}</td>
                     <td><div class="row row-cols">
                                             <div class="col">
-                                                <button class="btn btn-success"><a class="text-decoration-none text-white" href="#">Reserve Vehicle</a></button>
+                                                <button class="btn btn-success"><a class="text-decoration-none text-white" href="{{ path('reserve-vehicle', {'id': deliverer.id}) }}">Reserve Vehicle</a></button>
                                                 <button class="btn btn-warning"><a class="text-decoration-none text-white" href="{{ path('reservation-history-deliverer', {'id': deliverer.id}) }}">Reservation History</a></button>
                                             </div>
                                         </div>

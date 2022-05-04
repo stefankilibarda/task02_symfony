@@ -130,5 +130,16 @@ class OneControllerToRuleThemAllController extends AbstractController
         
     }
 
+    #[Route('/reserve-vehicle/{id}', name: 'reserve-vehicle', methods: ['GET', 'PUT'])]
+    public function reserveVehicle($id, RentRepository $rentRepository)
+    {
+        // dd($rentRepository->findAll());
+        return $this->render('one_controller_to_rule_them_all/reserve-vehicle.html.twig', [
+            'rent' => $rentRepository->findAll()
+        ]);
+
+
+    }
+
     
 }
