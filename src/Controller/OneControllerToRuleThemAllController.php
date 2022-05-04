@@ -44,7 +44,6 @@ class OneControllerToRuleThemAllController extends AbstractController
         
     }
     
-    // dd($deliverers);
 
 
 
