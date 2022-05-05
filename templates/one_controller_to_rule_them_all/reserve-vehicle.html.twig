@@ -17,12 +17,14 @@
     </thead>
     <tbody>
                 <tr>
-                    <td>{{ rent.getDeliverer().getName }}</td>
-                    <td>{{ form(form) }}</td>
+                    <td>{{ deliverer.getName }}</td>
+                    {{ form_start(form) }}
+                    <td>{{ form_widget(form.vehicle) }}</td>
                     <td><div class="row row-cols">
-                                            <div class="col">
-                                                <button class="btn btn-success"><a class="text-decoration-none text-white" href="#">Confirm</a></button>
-                                                <button class="btn btn-danger"><a class="text-decoration-none text-white" href="#">Cancel</a></button>
+                                            <div class="col flex justify-content-center">
+                                            {{ form_row(form.submit) }}
+                                                <button class="btn btn-danger"><a class="text-decoration-none text-white" href="{{ path('all-deliverers') }}">Cancel</a></button>
+                    {{ form_end(form) }}
                                             </div>
                                         </div>
                     </td>

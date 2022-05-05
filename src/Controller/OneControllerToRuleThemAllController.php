@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Deliverer;
+use App\Entity\Rent;
 use App\Entity\Vehicle;
 use App\Form\DelivererType;
+use App\Form\RentType;
 use App\Form\VehicleType;
 use App\Repository\DelivererRepository;
 use App\Repository\RentRepository;
@@ -91,11 +93,12 @@ class OneControllerToRuleThemAllController extends AbstractController
     }
 
 
-    #[Route('/add-vehicle', name: 'add-vehicle')]
+    #[Route('/add-vehicle', name: 'add-vehicle', methods: ['GET', 'PUT'])]
     public function addNewVehicle(RentRepository $rentRepository, VehicleRepository $vehicleRepository, Request $request)
     {
         $vehicle = new Vehicle();
         $form = $this->createForm(VehicleType::class, $vehicle);
+
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -130,12 +133,30 @@ class OneControllerToRuleThemAllController extends AbstractController
         
     }
 
-    #[Route('/reserve-vehicle/{id}', name: 'reserve-vehicle', methods: ['GET', 'PUT'])]
-    public function reserveVehicle($id, RentRepository $rentRepository)
+    #[Route('/reserve-vehicle/{id}', name: 'reserve-vehicle')]
+    public function reserveVehicle($id, DelivererRepository $delivererRepository, RentRepository $rentRepository, VehicleRepository $vehicleRepository, Request $request)
     {
-        // dd($rentRepository->findAll());
+        $deliverer = $delivererRepository->find($id);
+        $vehicles = $vehicleRepository->findAll();
+
+
+        $rent = new Rent();
+        $form = $this->createForm(RentType::class, $rent);
+
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rent->setDeliverer($deliverer);
+            $rentRepository->add($rent);
+            return $this->redirectToRoute('all-deliverers');
+        }
+
+        
+
         return $this->render('one_controller_to_rule_them_all/reserve-vehicle.html.twig', [
-            'rent' => $rentRepository->findAll()
+            'deliverer' => $deliverer,
+            'rents' => $rentRepository->findAll(),
+            'form' => $form->createView()
         ]);
 
 
